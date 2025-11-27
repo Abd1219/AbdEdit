@@ -206,6 +206,16 @@ class AbdEditApp {
             }
         });
         
+        // Prevenir pérdida de trabajo al actualizar/cerrar la página
+        window.addEventListener('beforeunload', (e) => {
+            // Solo mostrar advertencia si hay anotaciones o una imagen cargada
+            if (this.annotations.length > 0 || this.image) {
+                e.preventDefault();
+                e.returnValue = ''; // Requerido para Chrome
+                return ''; // Para navegadores antiguos
+            }
+        });
+        
         this.render();
     }
 
