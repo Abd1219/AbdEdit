@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AbdEdit - Editor de Imágenes</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="logo.png" alt="AbdEdit" class="logo" id="appLogo">
+            <div class="file-controls">
+                <input type="file" id="imageInput" accept="image/*" style="display: none;">
+                
+                <div class="button-group">
+                    <button onclick="document.getElementById('imageInput').click()" class="btn-primary">
+                        📁 Cargar
+                    </button>
+                    <button onclick="app.exportImage()" class="btn-secondary">
+                        💾 Descargar
+                    </button>
+                </div>
+                
+                <div class="button-group">
+                    <button onclick="app.undo()" class="btn-undo" title="Deshacer (Ctrl+Z)">
+                        ↶
+                    </button>
+                    <button onclick="app.redo()" class="btn-redo" title="Rehacer (Ctrl+Y)">
+                        ↷
+                    </button>
+                </div>
+                
+                <div class="button-group">
+                    <button onclick="app.deleteSelectedAnnotation()" class="btn-delete" id="deleteBtn" style="display: none;" title="Eliminar (Delete)">
+                        🗑️
+                    </button>
+                    <button onclick="app.clearAnnotations()" class="btn-danger">
+                        🗑️ Limpiar Todo
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="toolbar">
+            <div class="tool-group">
+                <button class="tool-btn active" data-tool="pencil" title="Lápiz">
+                    ✏️
+                </button>
+                
+                <!-- Menú desplegable de líneas y flechas -->
+                <div class="tool-dropdown">
+                    <button class="tool-btn" id="arrowBtn" title="Líneas y Flechas">
+                        ➡️
+                        <span class="dropdown-arrow">▼</span>
+                    </button>
+                    <div class="dropdown-menu" id="arrowMenu">
+                        <button class="dropdown-item" data-tool="line">
+                            ─ Línea
+                        </button>
+                        <button class="dropdown-item" data-tool="arrow">
+                            ➡️ Flecha Recta
+                        </button>
+                        <button class="dropdown-item" data-tool="curved-arrow">
+                            ↪️ Flecha Curva
+                        </button>
+                        <button class="dropdown-item" data-tool="measure-arrow">
+                            📐 Flecha con Medida
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Menú desplegable de formas -->
+                <div class="tool-dropdown">
+                    <button class="tool-btn" id="shapeBtn" title="Formas">
+                        ⬜
+                        <span class="dropdown-arrow">▼</span>
+                    </button>
+                    <div class="dropdown-menu" id="shapeMenu">
+                        <button class="dropdown-item" data-tool="rectangle">
+                            ⬜ Rectángulo
+                        </button>
+                        <button class="dropdown-item" data-tool="ellipse">
+                            ⭕ Elipse
+                        </button>
+                        <button class="dropdown-item" data-tool="triangle">
+                            🔺 Triángulo
+                        </button>
+                        <button class="dropdown-item" data-tool="angle">
+                            ∠ Ángulo
+                        </button>
+                        <button class="dropdown-item" data-tool="polygon">
+                            ◇ Forma Libre (4 puntos)
+                        </button>
+                    </div>
+                </div>
+                
+                <button class="tool-btn" data-tool="text" title="Texto">
+                    📝
+                </button>
+                
+                <button onclick="app.editSelectedText()" class="btn-edit-text" id="editTextBtn" style="display: none;" title="Editar Texto Seleccionado">
+                    ✏️
+                </button>
+                
+                <input type="color" id="colorPicker" value="#ff0000" title="Color">
+            </div>
+
+            <div class="tool-group">
+                <label>Grosor:</label>
+                <input type="range" id="strokeWidth" min="1" max="50" value="12">
+                <span id="strokeValue">12</span>
+            </div>
+
+        </div>
+
+        <div class="canvas-container">
+            <canvas id="canvas"></canvas>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

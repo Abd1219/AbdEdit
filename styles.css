@@ -1,0 +1,447 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 0;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 768px) {
+    body {
+        padding: 20px;
+    }
+    
+    .container {
+        border-radius: 12px;
+        min-height: auto;
+    }
+}
+
+header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.file-controls {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.button-group {
+    display: flex;
+    gap: 2px;
+    align-items: center;
+}
+
+@media (min-width: 768px) {
+    header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 30px;
+    }
+    
+    .logo {
+        height: 48px;
+    }
+    
+    .file-controls {
+        gap: 5px;
+        flex-wrap: nowrap;
+    }
+}
+
+.btn-primary, .btn-secondary, .btn-danger {
+    padding: 12px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.3s;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.btn-undo, .btn-redo, .btn-delete {
+    min-width: 44px;
+    height: 44px;
+    padding: 10px;
+    border: 2px solid #667eea;
+    background: #667eea;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    transition: all 0.2s;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-undo:hover, .btn-redo:hover {
+    background: #5568d3;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-undo:active, .btn-redo:active {
+    transform: scale(0.95);
+}
+
+.btn-edit-text {
+    width: 48px;
+    height: 48px;
+    border: 2px solid #3b82f6;
+    background: #3b82f6;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    transition: all 0.2s;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-edit-text:hover {
+    background: #2563eb;
+    border-color: #2563eb;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-edit-text:active {
+    transform: scale(0.95);
+}
+
+@media (min-width: 768px) {
+    .btn-edit-text {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+}
+
+.btn-delete {
+    background: #ef4444;
+    border-color: #ef4444;
+    color: white;
+}
+
+.btn-delete:hover {
+    background: #dc2626;
+    border-color: #dc2626;
+}
+
+@media (min-width: 768px) {
+    .btn-primary, .btn-secondary, .btn-danger {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+    
+    .btn-undo, .btn-redo, .btn-delete {
+        min-width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+}
+
+.btn-primary {
+    background: white;
+    color: #667eea;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.btn-danger {
+    background: #ef4444;
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #dc2626;
+}
+
+.toolbar {
+    background: #f8fafc;
+    padding: 10px;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.tool-group {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+    .toolbar {
+        padding: 15px 30px;
+        gap: 30px;
+        overflow-x: visible;
+    }
+    
+    .tool-group {
+        gap: 10px;
+    }
+}
+
+.tool-btn {
+    width: 48px;
+    height: 48px;
+    border: 2px solid #e2e8f0;
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: all 0.2s;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    flex-shrink: 0;
+}
+
+.tool-btn:active {
+    transform: scale(0.95);
+}
+
+.tool-btn.active {
+    background: #667eea;
+    border-color: #667eea;
+    color: white;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+}
+
+/* Dropdown de herramientas */
+.tool-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-arrow {
+    font-size: 10px;
+    margin-left: 2px;
+    opacity: 0.7;
+}
+
+.dropdown-menu {
+    display: none;
+    position: fixed;
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    z-index: 10000;
+    min-width: 220px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.dropdown-menu.show {
+    display: block;
+}
+
+.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 12px 16px;
+    border: none;
+    background: white;
+    text-align: left;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.2s;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.dropdown-item:first-child {
+    border-radius: 6px 6px 0 0;
+}
+
+.dropdown-item:last-child {
+    border-radius: 0 0 6px 6px;
+    border-bottom: none;
+}
+
+.dropdown-item:hover {
+    background: #f8fafc;
+}
+
+.dropdown-item:active {
+    background: #e2e8f0;
+}
+
+@media (min-width: 768px) {
+    .tool-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+    
+    .tool-btn:hover {
+        border-color: #667eea;
+        transform: scale(1.05);
+    }
+    
+    .tool-btn:active {
+        transform: scale(0.95);
+    }
+}
+
+label {
+    font-size: 12px;
+    color: #64748b;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+#colorPicker {
+    width: 48px;
+    height: 48px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.2s;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+#colorPicker:hover {
+    border-color: #667eea;
+    transform: scale(1.05);
+}
+
+#colorPicker:active {
+    transform: scale(0.95);
+}
+
+#strokeWidth {
+    width: 80px;
+}
+
+#strokeValue {
+    font-weight: 600;
+    color: #667eea;
+    min-width: 20px;
+    font-size: 14px;
+}
+
+#fontSize {
+    width: 50px;
+    padding: 10px 8px;
+    border: 2px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    label {
+        font-size: 14px;
+    }
+    
+    #colorPicker {
+        width: 40px;
+        height: 40px;
+    }
+    
+    #strokeWidth {
+        width: 100px;
+    }
+    
+    #fontSize {
+        width: 60px;
+    }
+}
+
+.canvas-container {
+    padding: 10px;
+    background: #f1f5f9;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+#canvas {
+    background: white;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    cursor: crosshair;
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 4px;
+    touch-action: none;
+}
+
+@media (min-width: 768px) {
+    .canvas-container {
+        padding: 30px;
+        min-height: 600px;
+    }
+    
+    #canvas {
+        border-radius: 8px;
+    }
+}
