@@ -190,6 +190,17 @@ class AbdEditApp {
             }
         });
         
+        // Color picker
+        document.getElementById('colorPicker').addEventListener('input', (e) => {
+            const newColor = e.target.value;
+            
+            // Si hay una anotación seleccionada, actualizar su color
+            if (this.selectedAnnotation) {
+                this.selectedAnnotation.color = newColor;
+                this.render();
+            }
+        });
+        
         // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
             if (e.ctrlKey && e.key === 'z') {
@@ -1748,6 +1759,7 @@ class AbdEditApp {
         
         const strokeWidthInput = document.getElementById('strokeWidth');
         const strokeValueSpan = document.getElementById('strokeValue');
+        const colorPicker = document.getElementById('colorPicker');
         
         let currentWidth = null;
         
@@ -1763,10 +1775,15 @@ class AbdEditApp {
             currentWidth = this.selectedAnnotation.width;
         }
         
-        // Actualizar el control si se encontró un grosor
+        // Actualizar el control de grosor si se encontró un grosor
         if (currentWidth !== null && strokeWidthInput && strokeValueSpan) {
             strokeWidthInput.value = currentWidth;
             strokeValueSpan.textContent = currentWidth;
+        }
+        
+        // Actualizar el selector de color con el color de la anotación seleccionada
+        if (this.selectedAnnotation.color && colorPicker) {
+            colorPicker.value = this.selectedAnnotation.color;
         }
     }
 
