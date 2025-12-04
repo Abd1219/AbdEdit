@@ -770,7 +770,7 @@ class AbdEditApp {
 
     isPointInAnnotation(annotation, x, y) {
         // Tolerancia más grande para facilitar el toque en móviles
-        const tolerance = 25;
+        const tolerance = 40;
         
         if (annotation.tool === 'line' || annotation.tool === 'arrow' || annotation.tool === 'measure-arrow') {
             return this.distanceToLine(x, y, annotation.startX, annotation.startY, 
@@ -888,7 +888,7 @@ class AbdEditApp {
         if (!this.selectedAnnotation) return null;
         
         // Área más grande para facilitar el toque en móviles
-        const handleSize = 30;
+        const handleSize = 45;
         const annotation = this.selectedAnnotation;
         
         if (annotation.tool === 'rectangle' || annotation.tool === 'highlight' || 
