@@ -265,10 +265,10 @@ class AbdEditApp {
 
     updateCurrentWidth(width) {
         if (this.selectedAnnotation) {
-            if (this.selectedAnnotation.strokeWidth !== undefined) {
-                this.selectedAnnotation.strokeWidth = width;
-            } else {
+            if (['pencil', 'line', 'arrow', 'curved-arrow', 'measure-arrow', 'angle'].includes(this.selectedAnnotation.tool)) {
                 this.selectedAnnotation.width = width;
+            } else {
+                this.selectedAnnotation.strokeWidth = width;
             }
             this.render();
         }
