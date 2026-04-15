@@ -212,6 +212,10 @@ class AbdEditApp {
             measureText: '?'
         };
 
+        if (['pencil', 'line', 'arrow', 'curved-arrow', 'measure-arrow', 'angle'].includes(this.currentTool)) {
+            previewAnn.width = strokeW;
+        }
+
         if (this.currentTool === 'curved-arrow') {
             const midX = (this.startX + x) / 2, midY = (this.startY + y) / 2;
             const dx = x - this.startX, dy = y - this.startY;
