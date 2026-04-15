@@ -45,6 +45,7 @@ export class DrawingUtils {
         
         const totalDist = Math.sqrt(Math.pow(toX - fromX, 2) + Math.pow(toY - fromY, 2));
         const arrowBaseX = toX - (headLength * 0.6) * Math.cos(angle);
+        const arrowBaseY = toY - (headLength * 0.6) * Math.sin(angle);
         const baseDist = Math.sqrt(Math.pow(arrowBaseX - fromX, 2) + Math.pow(arrowBaseY - fromY, 2));
         const tEnd = Math.min(0.95, baseDist / totalDist);
         
