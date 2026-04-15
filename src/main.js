@@ -245,9 +245,12 @@ class AbdEditApp {
 
     updateCurrentWidth(width) {
         if (this.selectedAnnotation) {
-            if (this.selectedAnnotation.strokeWidth !== undefined) this.selectedAnnotation.strokeWidth = width;
-            else if (this.selectedAnnotation.width !== undefined) this.selectedAnnotation.width = width;
-            this.render();
+            if (this.selectedAnnotation.strokeWidth !== undefined) {
+                this.selectedAnnotation.strokeWidth = width;
+            } else {
+                this.selectedAnnotation.width = width;
+            }
+            this.engine.render(this.image, this.state.annotations, this.selectedAnnotation);
         }
     }
 

@@ -12,8 +12,35 @@ export class ToolRegistry {
                 if (Math.sqrt(Math.pow(x - cx, 2) + Math.pow(y - cy, 2)) < tol * 2) return true;
             }
             return false;
-        } else if (['rectangle', 'highlight', 'blur', 'ellipse', 'triangle'].includes(ann.tool)) {
+        } else if (['highlight', 'blur'].includes(ann.tool)) {
             return x >= ann.x - tol && x <= ann.x + ann.width + tol && y >= ann.y - tol && y <= ann.y + ann.height + tol;
+        } else if (ann.tool === 'rectangle') {
+            const lines = [
+                [ann.x, ann.y, ann.x + ann.width, ann.y],
+                [ann.x + ann.width, ann.y, ann.x + ann.width, ann.y + ann.height],
+                [ann.x + ann.width, ann.y + ann.height, ann.x, ann.y + ann.height],
+                [ann.x, ann.y + ann.height, ann.x, ann.y]
+            ];
+            return lines.some(l => this.distanceToLine(x, y, l[0], l[1], l[2], l[3]) < tol);
+        } else if (ann.tool === 'triangle') {
+            const lines = [
+                [ann.x + ann.width / 2, ann.y, ann.x + ann.width, ann.y + ann.height],
+                [ann.x + ann.width, ann.y + ann.height, ann.x, ann.y + ann.height],
+                [ann.x, ann.y + ann.height, ann.x + ann.width / 2, ann.y]
+            ];
+            return lines.some(l => this.distanceToLine(x, y, l[0], l[1], l[2], l[3]) < tol);
+        } else if (ann.tool === 'ellipse') {
+            const cx = ann.x + ann.width / 2;
+            const cy = ann.y + ann.height / 2;
+            const rx = ann.width / 2;
+            const ry = ann.height / 2;
+            // Approximate distance to ellipse outline using a simple bounding check if strict math is complex,
+            // but for a precise border check we can normalize point and check radius:
+            if (rx <= 0 || ry <= 0) return Math.sqrt((x-cx)**2 + (y-cy)**2) < tol;
+            const nx = (x - cx) / rx;
+            const ny = (y - cy) / ry;
+            const d = Math.sqrt(nx*nx + ny*ny);
+            return Math.abs(d - 1) * Math.min(rx, ry) < tol;
         } else if (ann.tool === 'circle') {
             const dist = Math.sqrt(Math.pow(x - ann.x, 2) + Math.pow(y - ann.y, 2));
             return Math.abs(dist - ann.radius) < tol;

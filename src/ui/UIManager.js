@@ -96,10 +96,10 @@ export class UIManager {
         document.getElementById('editTextBtn').style.display = isEditable ? 'flex' : 'none';
         
         if (ann.color) document.getElementById('colorPicker').value = ann.color;
-        const width = ann.width || ann.strokeWidth;
-        if (width) {
-            document.getElementById('strokeWidth').value = width;
-            document.getElementById('strokeValue').textContent = width;
+        const strokeW = ann.strokeWidth !== undefined ? ann.strokeWidth : (ann.width !== undefined ? ann.width : null);
+        if (strokeW) {
+            document.getElementById('strokeWidth').value = strokeW;
+            document.getElementById('strokeValue').textContent = strokeW;
         }
     }
 
