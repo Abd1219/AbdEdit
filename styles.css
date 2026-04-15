@@ -152,7 +152,6 @@ header {
     background: rgba(239, 68, 68, 0.1);
 }
 
-/* Toolbar Flotante Estilo Vidrio */
 .toolbar {
     background: var(--bg-glass);
     backdrop-filter: blur(20px);
@@ -164,6 +163,8 @@ header {
     align-items: center;
     box-shadow: var(--shadow-premium);
     flex-wrap: wrap;
+    position: relative;
+    z-index: 100;
 }
 
 .tool-group {
