@@ -10,115 +10,155 @@
     <div class="container">
         <header>
             <img src="logo.png" alt="AbdEdit" class="logo" id="appLogo">
-            <div class="file-controls">
+            <nav class="file-controls">
                 <input type="file" id="imageInput" accept="image/*" style="display: none;">
                 
                 <div class="button-group">
-                    <button onclick="document.getElementById('imageInput').click()" class="btn-primary">
+                    <button id="loadBtn" class="btn-primary" title="Cargar Imagen (desde tu dispositivo)">
                         📁 Cargar
                     </button>
-                    <button onclick="app.exportImage()" class="btn-secondary">
+                    <button id="downloadBtn" class="btn-secondary" title="Descargar Imagen (PNG de alta calidad)">
                         💾 Descargar
                     </button>
                 </div>
                 
                 <div class="button-group">
-                    <button onclick="app.undo()" class="btn-undo" title="Deshacer (Ctrl+Z)">
+                    <button id="undoBtn" class="btn-undo" title="Deshacer (Ctrl+Z)">
                         ↶
                     </button>
-                    <button onclick="app.redo()" class="btn-redo" title="Rehacer (Ctrl+Y)">
+                    <button id="redoBtn" class="btn-redo" title="Rehacer (Ctrl+Y)">
                         ↷
                     </button>
                 </div>
                 
                 <div class="button-group">
-                    <button onclick="app.deleteSelectedAnnotation()" class="btn-delete" id="deleteBtn" style="display: none;" title="Eliminar (Delete)">
+                    <button id="deleteBtn" class="btn-delete" style="display: none;" title="Eliminar Elemento Seleccionado (Delete)">
                         🗑️
                     </button>
-                    <button onclick="app.clearAnnotations()" class="btn-danger">
+                    <button id="clearBtn" class="btn-danger" title="Limpiar todo el lienzo">
                         🗑️ Limpiar Todo
                     </button>
                 </div>
-            </div>
+            </nav>
         </header>
 
-        <div class="toolbar">
+        <section class="toolbar" aria-label="Barra de herramientas">
             <div class="tool-group">
-                <button class="tool-btn active" data-tool="pencil" title="Lápiz">
+                <button class="tool-btn active" data-tool="select" title="Seleccionar y Mover">
+                    👆
+                </button>
+                <button class="tool-btn" data-tool="pencil" title="Lápiz (dibujo libre)">
                     ✏️
                 </button>
                 
-                <!-- Menú desplegable de líneas y flechas -->
                 <div class="tool-dropdown">
                     <button class="tool-btn" id="arrowBtn" title="Líneas y Flechas">
                         ➡️
                         <span class="dropdown-arrow">▼</span>
                     </button>
                     <div class="dropdown-menu" id="arrowMenu">
-                        <button class="dropdown-item" data-tool="line">
-                            ─ Línea
-                        </button>
-                        <button class="dropdown-item" data-tool="arrow">
-                            ➡️ Flecha Recta
-                        </button>
-                        <button class="dropdown-item" data-tool="curved-arrow">
-                            ↪️ Flecha Curva
-                        </button>
-                        <button class="dropdown-item" data-tool="measure-arrow">
-                            📐 Flecha con Medida
-                        </button>
+                        <button class="dropdown-item" data-tool="line">─ Línea</button>
+                        <button class="dropdown-item" data-tool="arrow">➡️ Flecha Recta</button>
+                        <button class="dropdown-item" data-tool="curved-arrow">↪️ Flecha Curva</button>
+                        <button class="dropdown-item" data-tool="measure-arrow">📐 Flecha con Medida</button>
                     </div>
                 </div>
                 
-                <!-- Menú desplegable de formas -->
                 <div class="tool-dropdown">
-                    <button class="tool-btn" id="shapeBtn" title="Formas">
+                    <button class="tool-btn" id="shapeBtn" title="Formas geométricas">
                         ⬜
                         <span class="dropdown-arrow">▼</span>
                     </button>
                     <div class="dropdown-menu" id="shapeMenu">
-                        <button class="dropdown-item" data-tool="rectangle">
-                            ⬜ Rectángulo
-                        </button>
-                        <button class="dropdown-item" data-tool="ellipse">
-                            ⭕ Elipse
-                        </button>
-                        <button class="dropdown-item" data-tool="triangle">
-                            🔺 Triángulo
-                        </button>
-                        <button class="dropdown-item" data-tool="angle">
-                            ∠ Ángulo
-                        </button>
-                        <button class="dropdown-item" data-tool="polygon">
-                            ◇ Forma Libre (4 puntos)
-                        </button>
+                        <button class="dropdown-item" data-tool="rectangle">⬜ Rectángulo</button>
+                        <button class="dropdown-item" data-tool="ellipse">⭕ Elipse</button>
+                        <button class="dropdown-item" data-tool="triangle">🔺 Triángulo</button>
+                        <button class="dropdown-item" data-tool="angle">∠ Ángulo</button>
+                        <button class="dropdown-item" data-tool="polygon">◇ Forma Libre (4 puntos)</button>
                     </div>
                 </div>
                 
-                <button class="tool-btn" data-tool="text" title="Texto">
+                <button class="tool-btn" data-tool="text" title="Agregar texto">
                     📝
                 </button>
+
+                <button class="tool-btn" data-tool="blur" title="Censurar / Desenfoque">
+                    🌫️
+                </button>
+
+                <button class="tool-btn" data-tool="highlight" title="Resaltador">
+                    🖍️
+                </button>
                 
-                <button onclick="app.editSelectedText()" class="btn-edit-text" id="editTextBtn" style="display: none;" title="Editar Texto Seleccionado">
+                <button class="btn-edit-text" id="editTextBtn" style="display: none;" title="Editar texto o medida seleccionada">
                     ✏️
                 </button>
                 
-                <input type="color" id="colorPicker" value="#ff0000" title="Color">
+                <input type="color" id="colorPicker" value="#ff0000" title="Color de la herramienta">
             </div>
 
             <div class="tool-group">
-                <label>Grosor:</label>
+                <label for="strokeWidth">Grosor:</label>
                 <input type="range" id="strokeWidth" min="1" max="50" value="12">
                 <span id="strokeValue">12</span>
             </div>
+        </section>
 
-        </div>
-
-        <div class="canvas-container">
+        <main class="canvas-container" id="dropZone">
+            <div id="uploadHint" class="upload-hint">
+                <div class="hint-icon">🖼️</div>
+                <h3>¡Sube una imagen para comenzar!</h3>
+                <p>Arrastra y suelta aquí o usa el botón <b>Cargar</b></p>
+            </div>
             <canvas id="canvas"></canvas>
-        </div>
+        </main>
     </div>
 
-    <script src="app.js"></script>
+    <!-- UI Overlay for current tool hint -->
+    <div id="statusToast" class="status-toast"></div>
+
+    <!-- Initialization Scripts -->
+    <script type="module" src="src/main.js"></script>
+    <script type="module">
+        // Esperamos a que el DOM y el módulo principal estén listos
+        window.addEventListener('load', () => {
+            if (!window.app) return;
+
+            // Event listeners para acciones de archivo y globales
+            document.getElementById('loadBtn').addEventListener('click', () => document.getElementById('imageInput').click());
+            document.getElementById('downloadBtn').addEventListener('click', () => window.app.exportImage());
+            document.getElementById('undoBtn').addEventListener('click', () => window.app.undo());
+            document.getElementById('redoBtn').addEventListener('click', () => window.app.redo());
+            document.getElementById('deleteBtn').addEventListener('click', () => window.app.deleteSelected());
+            document.getElementById('clearBtn').addEventListener('click', () => window.app.clearAnnotations());
+            
+            document.getElementById('editTextBtn').addEventListener('click', () => {
+                const ann = window.app.selectedAnnotation;
+                if (ann) {
+                    if (ann.tool === 'text') window.app.editText(ann);
+                    else if (ann.tool === 'measure-arrow') window.app.editMeasure(ann);
+                }
+            });
+
+            // Lógica de Drop Zone
+            const dropZone = document.getElementById('dropZone');
+            dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('drag-active'); });
+            dropZone.addEventListener('dragleave', () => { dropZone.classList.remove('drag-active'); });
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('drag-active');
+                if (e.dataTransfer.files.length > 0) {
+                    const input = document.getElementById('imageInput');
+                    input.files = e.dataTransfer.files;
+                    input.dispatchEvent(new Event('change'));
+                }
+            });
+
+            // Ocultar hint cuando se carga imagen
+            document.getElementById('imageInput').addEventListener('change', () => {
+                document.getElementById('uploadHint').style.display = 'none';
+            });
+        });
+    </script>
 </body>
 </html>
