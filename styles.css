@@ -253,7 +253,9 @@ canvas {
 }
 
 .dropdown-menu {
-    position: fixed;
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
     background: var(--bg-glass);
     backdrop-filter: blur(40px);
     border: 1px solid var(--border-glass);

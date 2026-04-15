@@ -55,9 +55,6 @@ export class UIManager {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
             if (otherMenu) otherMenu.classList.remove('show');
-            const rect = btn.getBoundingClientRect();
-            menu.style.top = (rect.bottom + 4) + 'px';
-            menu.style.left = rect.left + 'px';
             menu.classList.toggle('show');
         });
 
