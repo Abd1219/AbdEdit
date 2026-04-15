@@ -270,7 +270,7 @@ class AbdEditApp {
             } else {
                 this.selectedAnnotation.width = width;
             }
-            this.engine.render(this.image, this.state.annotations, this.selectedAnnotation);
+            this.render();
         }
     }
 
