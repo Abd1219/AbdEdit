@@ -200,20 +200,36 @@ class AbdEditApp {
     renderPreview(x, y) {
         this.render();
         const color = document.getElementById('colorPicker').value;
-        const width = parseInt(document.getElementById('strokeWidth').value);
-        this.engine.drawAnnotation({
+        const strokeW = parseInt(document.getElementById('strokeWidth').value);
+        
+        let previewAnn = {
             tool: this.currentTool,
             startX: this.startX, startY: this.startY, endX: x, endY: y,
             x: Math.min(this.startX, x), y: Math.min(this.startY, y),
             width: Math.abs(x - this.startX), height: Math.abs(y - this.startY),
             radius: Math.sqrt(Math.pow(x - this.startX, 2) + Math.pow(y - this.startY, 2)),
-            color, width, strokeWidth: width,
-            measureText: '?',
-            vertexX: this.startX, vertexY: this.startY,
-            line1EndX: this.startX + 50, line1EndY: this.startY,
-            line2EndX: this.startX, line2EndY: this.startY - 50,
-            points: []
-        });
+            color: color, strokeWidth: strokeW,
+            measureText: '?'
+        };
+
+        if (this.currentTool === 'curved-arrow') {
+            const midX = (this.startX + x) / 2, midY = (this.startY + y) / 2;
+            const dx = x - this.startX, dy = y - this.startY;
+            const dist = Math.sqrt(dx*dx + dy*dy);
+            previewAnn.controlX = midX - dy / dist * (dist * 0.2);
+            previewAnn.controlY = midY + dx / dist * (dist * 0.2);
+        } else if (this.currentTool === 'angle') {
+            const len = Math.sqrt(Math.pow(x - this.startX, 2) + Math.pow(y - this.startY, 2));
+            previewAnn.vertexX = this.startX; previewAnn.vertexY = this.startY;
+            previewAnn.line1EndX = this.startX + len; previewAnn.line1EndY = this.startY;
+            previewAnn.line2EndX = this.startX; previewAnn.line2EndY = this.startY - len;
+        } else if (this.currentTool === 'polygon') {
+            const w = Math.abs(x - this.startX), h = Math.abs(y - this.startY);
+            const px = Math.min(this.startX, x), py = Math.min(this.startY, y);
+            previewAnn.points = [{x: px, y: py}, {x: px+w, y: py}, {x: px+w, y: py+h}, {x: px, y: py+h}];
+        }
+
+        this.engine.drawAnnotation(previewAnn);
     }
 
     findAnnotationAt(x, y) {
