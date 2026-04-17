@@ -1,0 +1,8 @@
+{
+  "name": "abdedit",
+  "version": "1.0.0",
+  "scripts": {
+    "correrservidor": "npx -y http-server .",
+    "subir": "git add . && git commit -m \"Actualización PWA y mejoras\" && git push"
+  }
+}
