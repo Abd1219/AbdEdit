@@ -104,4 +104,17 @@ export class UIManager {
         document.getElementById('deleteBtn').style.display = 'none';
         document.getElementById('editTextBtn').style.display = 'none';
     }
+
+    showToast(message) {
+        const toast = document.getElementById('statusToast');
+        if (!toast) return;
+        toast.textContent = message;
+        toast.style.display = 'block';
+        toast.style.animation = 'fadeIn 0.3s ease forwards';
+        
+        setTimeout(() => {
+            toast.style.animation = 'fadeIn 0.3s ease reverse forwards';
+            setTimeout(() => { toast.style.display = 'none'; }, 300);
+        }, 3000);
+    }
 }

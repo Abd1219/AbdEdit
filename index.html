@@ -2,10 +2,11 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AbdEdit - Editor de Imágenes</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="logo.png">
 </head>
 <body>
     <div class="container">
@@ -16,10 +17,10 @@
                 
                 <div class="button-group">
                     <button id="loadBtn" class="btn-primary" title="Cargar Imagen (desde tu dispositivo)">
-                        📁 Cargar
+                        📁 <span>Cargar</span>
                     </button>
                     <button id="downloadBtn" class="btn-secondary" title="Descargar Imagen (PNG de alta calidad)">
-                        💾 Descargar
+                        💾 <span>Descargar</span>
                     </button>
                 </div>
                 
@@ -34,10 +35,10 @@
                 
                 <div class="button-group">
                     <button id="deleteBtn" class="btn-delete" style="display: none;" title="Eliminar Elemento Seleccionado (Delete)">
-                        🗑️
+                        🗑️ <span>Eliminar</span>
                     </button>
                     <button id="clearBtn" class="btn-danger" title="Limpiar todo el lienzo">
-                        🗑️ Limpiar Todo
+                        🗑️ <span>Limpiar Todo</span>
                     </button>
                 </div>
             </nav>
@@ -45,17 +46,12 @@
 
         <section class="toolbar" aria-label="Barra de herramientas">
             <div class="tool-group">
-                <button class="tool-btn active" data-tool="select" title="Seleccionar y Mover">
-                    👆
-                </button>
-                <button class="tool-btn" data-tool="pencil" title="Lápiz (dibujo libre)">
-                    ✏️
-                </button>
+                <button class="tool-btn active" data-tool="select" title="Seleccionar y Mover">👆</button>
+                <button class="tool-btn" data-tool="pencil" title="Lápiz (dibujo libre)">✏️</button>
                 
                 <div class="tool-dropdown">
                     <button class="tool-btn" id="arrowBtn" title="Líneas y Flechas">
-                        ➡️
-                        <span class="dropdown-arrow">▼</span>
+                        ➡️ <span class="dropdown-arrow">▼</span>
                     </button>
                     <div class="dropdown-menu" id="arrowMenu">
                         <button class="dropdown-item" data-tool="line">─ Línea</button>
@@ -67,35 +63,24 @@
                 
                 <div class="tool-dropdown">
                     <button class="tool-btn" id="shapeBtn" title="Formas geométricas">
-                        ⬜
-                        <span class="dropdown-arrow">▼</span>
+                        ⬜ <span class="dropdown-arrow">▼</span>
                     </button>
                     <div class="dropdown-menu" id="shapeMenu">
                         <button class="dropdown-item" data-tool="rectangle">⬜ Rectángulo</button>
                         <button class="dropdown-item" data-tool="ellipse">⭕ Elipse</button>
                         <button class="dropdown-item" data-tool="triangle">🔺 Triángulo</button>
                         <button class="dropdown-item" data-tool="angle">∠ Ángulo</button>
-                        <button class="dropdown-item" data-tool="polygon">◇ Forma Libre (4 puntos)</button>
+                        <button class="dropdown-item" data-tool="polygon">◇ Forma Libre</button>
                     </div>
                 </div>
                 
-                <button class="tool-btn" data-tool="text" title="Agregar texto">
-                    📝
-                </button>
-
-                <button class="tool-btn" data-tool="blur" title="Censurar / Desenfoque">
-                    🌫️
-                </button>
-
-                <button class="tool-btn" data-tool="highlight" title="Resaltador">
-                    🖍️
-                </button>
+                <button class="tool-btn" data-tool="text" title="Agregar texto">📝</button>
+                <button class="tool-btn" data-tool="blur" title="Censurar / Desenfoque">🌫️</button>
+                <button class="tool-btn" data-tool="highlight" title="Resaltador">🖍️</button>
                 
-                <button class="btn-edit-text" id="editTextBtn" style="display: none;" title="Editar texto o medida seleccionada">
-                    ✏️
-                </button>
+                <button class="btn-edit-text" id="editTextBtn" style="display: none;" title="Editar texto">✏️</button>
                 
-                <input type="color" id="colorPicker" value="#ff0000" title="Color de la herramienta">
+                <input type="color" id="colorPicker" value="#ff0000" title="Color">
             </div>
 
             <div class="tool-group">
@@ -115,17 +100,13 @@
         </main>
     </div>
 
-    <!-- UI Overlay for current tool hint -->
     <div id="statusToast" class="status-toast"></div>
 
-    <!-- Initialization Scripts -->
     <script type="module" src="src/main.js"></script>
     <script type="module">
-        // Esperamos a que el DOM y el módulo principal estén listos
         window.addEventListener('load', () => {
             if (!window.app) return;
 
-            // Event listeners para acciones de archivo y globales
             document.getElementById('loadBtn').addEventListener('click', () => document.getElementById('imageInput').click());
             document.getElementById('downloadBtn').addEventListener('click', () => window.app.exportImage());
             document.getElementById('undoBtn').addEventListener('click', () => window.app.undo());
@@ -141,7 +122,6 @@
                 }
             });
 
-            // Lógica de Drop Zone
             const dropZone = document.getElementById('dropZone');
             dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('drag-active'); });
             dropZone.addEventListener('dragleave', () => { dropZone.classList.remove('drag-active'); });
@@ -155,7 +135,6 @@
                 }
             });
 
-            // Ocultar hint cuando se carga imagen
             document.getElementById('imageInput').addEventListener('change', () => {
                 document.getElementById('uploadHint').style.display = 'none';
             });

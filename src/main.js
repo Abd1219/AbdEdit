@@ -32,6 +32,11 @@ class AbdEditApp {
         // Set initial size
         this.engine.setSize(1000, 600);
         this.render();
+
+        // Responsive handling
+        window.addEventListener('resize', () => {
+            this.fitCanvasToScreen();
+        });
     }
 
     render() {
@@ -283,23 +288,29 @@ class AbdEditApp {
             img.onload = () => {
                 this.engine.setImage(img);
                 this.state.reset();
+                this.fitCanvasToScreen();
                 this.render();
                 
-                // Adjust visual size if needed (responsive)
-                const maxWidth = window.innerWidth > 768 ? 1200 : window.innerWidth - 40;
-                const maxHeight = window.innerHeight > 768 ? 800 : window.innerHeight - 300;
-                if (img.width > maxWidth || img.height > maxHeight) {
-                    const scale = Math.min(maxWidth / img.width, maxHeight / img.height);
-                    this.engine.canvas.style.width = (img.width * scale) + 'px';
-                    this.engine.canvas.style.height = (img.height * scale) + 'px';
-                } else {
-                    this.engine.canvas.style.width = '';
-                    this.engine.canvas.style.height = '';
-                }
+                document.getElementById('uploadHint').style.display = 'none';
+                this.ui.showToast('Imagen cargada con éxito');
             };
             img.src = event.target.result;
         };
         reader.readAsDataURL(file);
+    }
+
+    fitCanvasToScreen() {
+        if (!this.engine.image) return;
+        
+        const container = document.getElementById('dropZone');
+        const containerWidth = container.clientWidth - 20;
+        const containerHeight = container.clientHeight - 20;
+        
+        const img = this.engine.image;
+        const scale = Math.min(containerWidth / img.width, containerHeight / img.height, 1);
+        
+        this.engine.canvas.style.width = (img.width * scale) + 'px';
+        this.engine.canvas.style.height = (img.height * scale) + 'px';
     }
 
     addText() {
