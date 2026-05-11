@@ -85,11 +85,14 @@ class AbdEditApp {
             this.deselect();
         }
 
-        // Start drawing
-        this.isDrawing = true;
+        // Start drawing (unless it's text, which is one-shot)
         if (this.currentTool === 'text') {
             this.addText();
-        } else if (this.currentTool === 'pencil') {
+            return;
+        }
+
+        this.isDrawing = true;
+        if (this.currentTool === 'pencil') {
             this.state.addAnnotation({
                 tool: 'pencil',
                 points: [{x: this.startX, y: this.startY}],
@@ -314,13 +317,23 @@ class AbdEditApp {
     }
 
     addText() {
-        const text = prompt('Texto:');
-        if (!text) return;
-        const size = parseInt(prompt('Tamaño (12-72):', '50')) || 50;
+        const text = prompt('Texto:', 'Inserte el texto aquí');
+        if (text === null) return;
+        
+        const sizeInput = prompt('Tamaño (12-72):', '50');
+        if (sizeInput === null) return;
+        
+        const size = parseInt(sizeInput) || 50;
         this.state.addAnnotation({
-            tool: 'text', text, x: this.startX, y: this.startY + size,
-            color: document.getElementById('colorPicker').value, fontSize: size, height: size
+            tool: 'text', 
+            text: text || 'Inserte el texto aquí', 
+            x: this.startX, 
+            y: this.startY,
+            color: document.getElementById('colorPicker').value, 
+            fontSize: size, 
+            height: size
         });
+        this.state.saveHistory();
         this.render();
     }
 

@@ -176,8 +176,8 @@ header {
     flex-wrap: nowrap;
     position: relative;
     z-index: 100;
-    overflow-x: auto;
-    scrollbar-width: none; /* Hide scrollbar for cleaner look */
+    overflow: visible;
+    scrollbar-width: none;
 }
 
 .toolbar::-webkit-scrollbar {
@@ -271,25 +271,38 @@ canvas {
     position: relative;
 }
 
+.dropdown-arrow {
+    font-size: 0.6rem;
+    margin-left: 4px;
+    transition: transform 0.3s ease;
+    opacity: 0.7;
+}
+
+.dropdown-open .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
 .dropdown-menu {
-    position: absolute;
-    top: calc(100% + 6px);
-    left: 0;
-    background: var(--bg-glass);
-    backdrop-filter: blur(40px);
+    position: fixed;
+    background: #0f172a; /* Solid background to ensure visibility */
     border: 1px solid var(--border-glass);
     border-radius: var(--radius-md);
-    box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.8);
     display: none;
     flex-direction: column;
     padding: 8px;
     min-width: 240px;
-    z-index: 1000;
+    z-index: 10002; /* Extremely high to be above everything */
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
 }
 
 .dropdown-menu.show {
     display: flex;
-    animation: slideUp 0.3s ease;
+    visibility: visible;
+    opacity: 1;
+    animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .dropdown-item {
@@ -458,7 +471,9 @@ input[type="range"]::-webkit-slider-thumb:hover {
         gap: 12px;
         border-radius: 20px 20px 0 0;
         justify-content: flex-start;
-        background: rgba(15, 23, 42, 0.98);
+        background: rgba(15, 23, 42, 0.98); /* Solid-ish to avoid containing block for fixed children */
+        backdrop-filter: none; /* Removed to allow fixed children to escape overflow clipping */
+        -webkit-backdrop-filter: none;
         z-index: 1001;
         overflow-x: auto;
         border-bottom: none;
@@ -510,12 +525,20 @@ input[type="range"]::-webkit-slider-thumb:hover {
     }
 
     .dropdown-menu {
-        bottom: calc(100% + 15px);
+        bottom: 90px; /* Slightly higher than the bottom toolbar */
         top: auto;
-        left: 50%;
-        transform: translateX(-50%);
-        min-width: 220px;
-        position: fixed; /* Keep it relative to screen on mobile if needed */
+        left: 10px;
+        right: 10px;
+        width: calc(100% - 20px);
+        transform: none;
+        border-radius: var(--radius-lg);
+        padding: 12px;
+        background: #0f172a;
+        z-index: 10002;
+    }
+
+    .dropdown-menu.show {
+        animation: slideUpFull 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .dropdown-item {
@@ -533,8 +556,13 @@ input[type="range"]::-webkit-slider-thumb:hover {
     to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes slideUp {
-    from { opacity: 0; transform: translate(-50%, 20px); }
-    to { opacity: 1; transform: translate(-50%, 0); }
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUpFull {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 

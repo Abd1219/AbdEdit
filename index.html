@@ -9,6 +9,22 @@
     <link rel="apple-touch-icon" href="logo.png">
 </head>
 <body>
+    <!-- Menús movidos arriba del todo para asegurar máxima prioridad de renderizado -->
+    <div class="dropdown-menu" id="arrowMenu">
+        <button class="dropdown-item" data-tool="line">─ Línea</button>
+        <button class="dropdown-item" data-tool="arrow">➡️ Flecha Recta</button>
+        <button class="dropdown-item" data-tool="curved-arrow">↪️ Flecha Curva</button>
+        <button class="dropdown-item" data-tool="measure-arrow">📐 Flecha con Medida</button>
+    </div>
+
+    <div class="dropdown-menu" id="shapeMenu">
+        <button class="dropdown-item" data-tool="rectangle">⬜ Rectángulo</button>
+        <button class="dropdown-item" data-tool="ellipse">⭕ Elipse</button>
+        <button class="dropdown-item" data-tool="triangle">🔺 Triángulo</button>
+        <button class="dropdown-item" data-tool="angle">∠ Ángulo</button>
+        <button class="dropdown-item" data-tool="polygon">◇ Forma Libre</button>
+    </div>
+
     <div class="container">
         <header>
             <img src="logo.png" alt="AbdEdit" class="logo" id="appLogo">
@@ -53,25 +69,12 @@
                     <button class="tool-btn" id="arrowBtn" title="Líneas y Flechas">
                         ➡️ <span class="dropdown-arrow">▼</span>
                     </button>
-                    <div class="dropdown-menu" id="arrowMenu">
-                        <button class="dropdown-item" data-tool="line">─ Línea</button>
-                        <button class="dropdown-item" data-tool="arrow">➡️ Flecha Recta</button>
-                        <button class="dropdown-item" data-tool="curved-arrow">↪️ Flecha Curva</button>
-                        <button class="dropdown-item" data-tool="measure-arrow">📐 Flecha con Medida</button>
-                    </div>
                 </div>
                 
                 <div class="tool-dropdown">
                     <button class="tool-btn" id="shapeBtn" title="Formas geométricas">
                         ⬜ <span class="dropdown-arrow">▼</span>
                     </button>
-                    <div class="dropdown-menu" id="shapeMenu">
-                        <button class="dropdown-item" data-tool="rectangle">⬜ Rectángulo</button>
-                        <button class="dropdown-item" data-tool="ellipse">⭕ Elipse</button>
-                        <button class="dropdown-item" data-tool="triangle">🔺 Triángulo</button>
-                        <button class="dropdown-item" data-tool="angle">∠ Ángulo</button>
-                        <button class="dropdown-item" data-tool="polygon">◇ Forma Libre</button>
-                    </div>
                 </div>
                 
                 <button class="tool-btn" data-tool="text" title="Agregar texto">📝</button>
@@ -101,6 +104,8 @@
     </div>
 
     <div id="statusToast" class="status-toast"></div>
+
+    <!-- Menús movidos arriba -->
 
     <script type="module" src="src/main.js"></script>
     <script type="module">
